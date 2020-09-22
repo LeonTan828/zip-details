@@ -16,10 +16,10 @@ class CreateZipinputsTable extends Migration
         Schema::create('zipinputs', function (Blueprint $table) {
             $table->id();
             $table->string('zip_code');
-            // $table->string('lat');
-            // $table->string('lng');
-            // $table->string('city');
-            // $table->string('state');
+            $table->string('lat');
+            $table->string('lng');
+            $table->string('city');
+            $table->string('state');
             $table->timestamps();
         });
     }
