@@ -17,4 +17,11 @@
 
     <h2>Content!</h2>
 
+    <ul>
+        @foreach($usrinputs as $usrinput)
+            <li>{{ $usrinput-> zip_code }} - {{ $usrinput->city }}</li>
+
+        @endforeach
+    </ul>
+
 @endsection
