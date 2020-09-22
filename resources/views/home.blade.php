@@ -20,7 +20,18 @@
 
     <ul>
         @foreach($usrinputs as $usrinput)
-            <li>{{ $usrinput-> zip_code }} - {{ $usrinput->city }}</li>
+            <li>
+            {{ $usrinput-> zip_code }}
+            
+            <br>
+
+            City - {{ $usrinput->city }}
+
+            <br>
+
+            State - {{ $usrinput->state }}
+            
+            </li>
 
         @endforeach
     </ul>
