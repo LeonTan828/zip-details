@@ -7,6 +7,14 @@
 
 @section('content')
 
-    <h1>Content!</h1>
+
+    <p>Type in the zip code below and click submit</p>
+
+    <form action="/create" method="post">
+        <input type="text" name="title" placeholder="Zip Code">
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Content!</h2>
 
 @endsection
