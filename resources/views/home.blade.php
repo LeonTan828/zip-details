@@ -11,7 +11,8 @@
     <p>Type in the zip code below and click submit</p>
 
     <form action="/create" method="post">
-        <input type="text" name="title" placeholder="Zip Code">
+        <input type="text" name="zip_code" placeholder="Zip Code">
+        {{ csrf_field() }}
         <button type="submit">Submit</button>
     </form>
 
