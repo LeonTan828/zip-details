@@ -18,10 +18,16 @@
 
     <h2>Content!</h2>
 
+    <h3> 
+        @if ($results != "")
+        {{ $results->city }}
+        @endif
+
+    </h3>
     <ul>
         @foreach($usrinputs as $usrinput)
             <li>
-            {{ $usrinput-> zip_code }}
+            {{ $usrinput->zip_code }}
             
             <br>
 
