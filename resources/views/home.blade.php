@@ -20,26 +20,41 @@
 
     <h3> 
         @if ($results != "")
-        {{ $results->city }}
+
+        <p>Zip Code:    {{ $results->zip_code }}
+        <br>
+        Latitude:       {{ $results->lat }}
+        <br>
+        Longitude:      {{ $results->lng }}
+        <br>
+        City:           {{ $results->city }}
+        <br>
+        State:          {{ $results->state }}
+        <br>
+        Timezone Identifier:    {{ $results->timezone->timezone_identifier }}
+        <br>
+        Timezone abbreviation:  {{ $results->timezone->timezone_abbr }}
+        <br>
+        UTC offset:             {{ $results->timezone->utc_offset_sec }}
+        <br>
+        is dst:                 {{ $results->timezone->is_dst }}
+        <br>
+        Acceptable city names:
+
+            @foreach ($results->acceptable_city_names as $stuff)
+                {{ $stuff }}
+                <br>
+            @endforeach
+
+        <br>
+        Area Code:
+            @foreach ($results->area_codes as $stuff)
+                {{ $stuff }}
+                <br>
+            @endforeach
+        </p>
         @endif
 
     </h3>
-    <ul>
-        @foreach($usrinputs as $usrinput)
-            <li>
-            {{ $usrinput->zip_code }}
-            
-            <br>
-
-            City - {{ $usrinput->city }}
-
-            <br>
-
-            State - {{ $usrinput->state }}
-            
-            </li>
-
-        @endforeach
-    </ul>
 
 @endsection
