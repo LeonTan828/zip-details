@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\ZipInput;
-// use GuzzleHttp\Client;
 use App\Utilities\ZipCodeAccessor;
 use App\Utilities\ZipCodeDAO;
 

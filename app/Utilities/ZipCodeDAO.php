@@ -3,7 +3,7 @@
 namespace App\Utilities;
 
 use Illuminate\Http\Request;
-use App\ZipInput;
+use App\Models\ZipInput;
 
 class ZipCodeDAO
 {
