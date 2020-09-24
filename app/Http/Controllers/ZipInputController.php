@@ -9,7 +9,8 @@ use App\Utilities\ZipCodeDAO;
 
 class ZipInputController extends Controller
 {
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
         
         // Making api call
         $zipaccess = new ZipCodeAccessor();
