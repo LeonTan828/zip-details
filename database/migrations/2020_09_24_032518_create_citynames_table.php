@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateZipinputsTable extends Migration
+class CreateCitynamesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateZipinputsTable extends Migration
      */
     public function up()
     {
-        Schema::create('zipinputs', function (Blueprint $table) {
-            $table->string('zip_code');
-            $table->string('lat');
-            $table->string('lng');
+        Schema::create('citynames', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('city');
             $table->string('state');
-            $table->string('timezone_identifier');
+            $table->string('zip_code');
 
-            $table->primary('zip_code');
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ class CreateZipinputsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('zipinputs');
+        Schema::dropIfExists('citynames');
     }
 }

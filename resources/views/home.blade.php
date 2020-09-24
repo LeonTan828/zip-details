@@ -43,7 +43,9 @@
         Acceptable city names:
 
             @foreach ($results->acceptable_city_names as $stuff)
-                {{ $stuff }}
+                City: {{ $stuff->city }}
+                <br>
+                State: {{ $stuff->state }}
                 <br>
             @endforeach
 
