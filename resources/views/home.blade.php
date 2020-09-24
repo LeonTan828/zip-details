@@ -16,6 +16,15 @@
         <button type="submit">Submit</button>
     </form>
 
+    <br>
+
+    <form action="/match" method="get">
+        {{ csrf_field() }}
+        <button type="submit">Go to match</button>
+    </form>
+
+    
+
     <h2>Content!</h2>
 
     <h3> 
