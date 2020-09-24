@@ -6,29 +6,23 @@ use Illuminate\Http\Request;
 use App\ZipInput;
 // use GuzzleHttp\Client;
 use App\Utilities\ZipCodeAccessor;
+use App\Utilities\ZipCodeDAO;
 
 
 class ZipInputController extends Controller
 {
     public function create(Request $request) {
         
-
+        // Making api call
         $zipaccess = new ZipCodeAccessor();
+        $resultbody = $zipaccess->index($request->zip_code);
 
-        $input = new ZipInput();
-        $input->zip_code = $request->zip_code;
-        $input->lat = "0";
-        $input->lng = "0";
-        $input->city = "nowhere";
-        $input->state = "nostate";
-
-        $input->save();
-
-        $inputs = ZipInput::all();
+        // Store in db
+        $zipstore = new ZipCodeDAO();
+        $zipstore->index($resultbody);
 
         return view('home', [
-            'usrinputs' => $inputs,
-            'results' => $zipaccess->index($request->zip_code)
+            'results' => $resultbody
         ]);
 
         // return redirect('/');

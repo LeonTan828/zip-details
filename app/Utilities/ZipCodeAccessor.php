@@ -11,7 +11,7 @@ class ZipCodeAccessor
     {
         $client = new Client();
 
-        $api_key = 'A27iUnSKR0Xi8g5as2NFFWxz4W5JnVK7qeAHALfe2ZyTXaDKOYfivopeXlDYN4a6';
+        $api_key = 'ycu3JwgT9YdhWrpYIeyVBo6bTbxgf7D3iwAJnSmgw10Mamw5lfTXXIHHdkJHif4b';
         $format = 'json';
         $units = 'degrees';
         $api_url = 'http://www.zipcodeapi.com/rest/'.$api_key.'/info.'.$format.'/'.$zip.'/'.$units;
@@ -20,7 +20,6 @@ class ZipCodeAccessor
 
         $statusCode = $response->getStatusCode();
         $body = $response->getBody()->getContents();
-
 
         return json_decode($body);
     }

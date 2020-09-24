@@ -10,10 +10,8 @@ class HomeController extends Controller
     public function index()
     {
         $results = "";
-        $inputs = ZipInput::all();
 
         return view('home', [
-            'usrinputs' => $inputs,
             'results' => $results
         ]);
     }

@@ -19,6 +19,7 @@
     <h2>Content!</h2>
 
     <h3> 
+    
         @if ($results != "")
 
         <p>Zip Code:    {{ $results->zip_code }}

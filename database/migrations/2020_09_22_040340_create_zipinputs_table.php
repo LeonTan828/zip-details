@@ -14,12 +14,16 @@ class CreateZipinputsTable extends Migration
     public function up()
     {
         Schema::create('zipinputs', function (Blueprint $table) {
-            $table->id();
             $table->string('zip_code');
+            $table->primary('zip_code');
             $table->string('lat');
             $table->string('lng');
             $table->string('city');
             $table->string('state');
+            $table->string('timezone_id');
+            $table->string('timezone_abbr');
+            $table->string('utc');
+            $table->string('is_dst');
             $table->timestamps();
         });
     }
