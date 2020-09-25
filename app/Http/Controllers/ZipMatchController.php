@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Utilities\ZipCodeMatch;
 use App\Utilities\ZipCodeAccessor;
+use App\Utilities\ZipCodeDAO;
 
 class ZipMatchController extends Controller
 {
@@ -39,8 +40,67 @@ class ZipMatchController extends Controller
         }
 
         $zipaccess = new ZipCodeAccessor();
-        $zip1 = $zipaccess->index($matchresult->zip_code1);
-        $zip2 = $zipaccess->index($matchresult->zip_code2);
+        $zipDAO = new ZipCodeDAO();
+        $found1 = $zipDAO->find($request->zip_code1);
+        $found2 = $zipDAO->find($request->zip_code2);
+        $zip1 = "";
+        $zip2 = "";
+
+        if (!$found1) {
+            echo "nothing found in db";
+
+            // Making api call
+            $zip1 = $zipaccess->index($request->zip_code1);
+
+            if (gettype($zip1) == "integer") {
+                if ($zip1 == 0) {
+                    return view('home', [
+                        'results' => ""
+                    ]);
+                }
+                else if ($zip1 == 1) {
+                    return view('home', [
+                        'results' => "zip not found"
+                    ]);
+                } 
+            }
+            // Store in db
+            $zipDAO->index($zip1);
+        } else {
+            echo "found";
+            $zip1 = $zipDAO->get($request->zip_code1);
+        }
+
+        if (!$found2) {
+            echo "nothing found in db";
+
+            // Making api call
+            $zip2 = $zipaccess->index($request->zip_code2);
+
+            if (gettype($zip2) == "integer") {
+                if ($zip2 == 0) {
+                    return view('home', [
+                        'results' => ""
+                    ]);
+                }
+                else if ($zip2 == 1) {
+                    return view('home', [
+                        'results' => "zip not found"
+                    ]);
+                } 
+            }
+            // Store in db
+            $zipDAO->index($zip2);
+        } else {
+            echo "found";
+            $zip2 = $zipDAO->get($request->zip_code2);
+        }
+
+        
+
+        // $zipaccess = new ZipCodeAccessor();
+        // $zip1 = $zipaccess->index($matchresult->zip_code1);
+        // $zip2 = $zipaccess->index($matchresult->zip_code2);
 
         return view('match', [
             'zip1' => $zip1,
