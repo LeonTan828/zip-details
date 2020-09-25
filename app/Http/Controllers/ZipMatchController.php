@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Utilities\ZipCodeMatch;
-use App\Utilities\ZipCodeAccessor;
-use App\Utilities\ZipCodeDAO;
 
 class ZipMatchController extends Controller
 {
@@ -26,21 +24,21 @@ class ZipMatchController extends Controller
                                         $request->dist, 
                                         $request->distunit);
 
+        $zip1 = null;
+        $zip2 = null;
+
         if (gettype($matchresult) == "integer") {
             if ($matchresult == 0) {
-                return view('match', [
-                    'zip1' => ""
-                ]);
+                $zip1 = "";
             } 
             else if ($matchresult == 1) {
-                return view('match', [
-                    'zip1' => "no match"
-                ]);
+                $zip1 = "no match";
             }
         }
-
-        $zip1 = $zipmatch->get($request->zip_code1);
-        $zip2 = $zipmatch->get($request->zip_code2);;
+        else {
+            $zip1 = $zipmatch->get($request->zip_code1);
+            $zip2 = $zipmatch->get($request->zip_code2);
+        }
 
         return view('match', [
             'zip1' => $zip1,
