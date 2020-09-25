@@ -29,7 +29,11 @@
 
     <h3> 
     
-        @if ($results != "")
+        @if ($results == "")
+        <p> Please provide valid input </p>
+        @elseif ($results == "zip not found")
+        <p> this zip code does not exist </p>
+        @else
 
         <p>Zip Code:    {{ $results->zip_code }}
         <br>

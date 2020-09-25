@@ -21,6 +21,18 @@ class ZipInputController extends Controller
             $zipaccess = new ZipCodeAccessor();
             $model = $zipaccess->index($request->zip_code);
 
+            if (gettype($model) == "integer") {
+                if ($model == 0) {
+                    return view('home', [
+                        'results' => ""
+                    ]);
+                }
+                else if ($model == 1) {
+                    return view('home', [
+                        'results' => "zip not found"
+                    ]);
+                } 
+            }
             // Store in db
             $zipDAO->index($model);
         } else {
