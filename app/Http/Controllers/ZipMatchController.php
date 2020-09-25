@@ -51,19 +51,7 @@ class ZipMatchController extends Controller
 
             // Making api call
             $zip1 = $zipaccess->index($request->zip_code1);
-
-            if (gettype($zip1) == "integer") {
-                if ($zip1 == 0) {
-                    return view('home', [
-                        'results' => ""
-                    ]);
-                }
-                else if ($zip1 == 1) {
-                    return view('home', [
-                        'results' => "zip not found"
-                    ]);
-                } 
-            }
+            
             // Store in db
             $zipDAO->index($zip1);
         } else {
@@ -77,18 +65,6 @@ class ZipMatchController extends Controller
             // Making api call
             $zip2 = $zipaccess->index($request->zip_code2);
 
-            if (gettype($zip2) == "integer") {
-                if ($zip2 == 0) {
-                    return view('home', [
-                        'results' => ""
-                    ]);
-                }
-                else if ($zip2 == 1) {
-                    return view('home', [
-                        'results' => "zip not found"
-                    ]);
-                } 
-            }
             // Store in db
             $zipDAO->index($zip2);
         } else {
