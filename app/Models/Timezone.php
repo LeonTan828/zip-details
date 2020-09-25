@@ -8,7 +8,7 @@ class Timezone extends Model
 {
     protected $table = "timezones";
 
-    protected $primaryKey = "zip_code";
+    protected $primaryKey = "timezone_identifier";
     public $incrementing = false;
     protected $keyType = "string";
 }
