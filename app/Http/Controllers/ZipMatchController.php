@@ -21,7 +21,7 @@ class ZipMatchController extends Controller
     public function match(Request $request)
     {
         $zipmatch = new ZipCodeMatch();
-        $matchresult = $zipmatch->index( $request->zip_code1, 
+        $matchresult = $zipmatch->findMatch( $request->zip_code1, 
                                         $request->zip_code2, 
                                         $request->dist, 
                                         $request->distunit);

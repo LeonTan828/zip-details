@@ -8,7 +8,7 @@ use GuzzleHttp\Exception\RequestException;
 
 class ZipCodeMatch
 {
-    public function index($zip1, $zip2, $dist, $distunit)
+    public function findMatch($zip1, $zip2, $dist, $distunit)
     {
         $client = new Client();
 
