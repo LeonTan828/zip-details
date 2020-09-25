@@ -8,7 +8,7 @@ use App\Utilities\ZipCodeDAO;
 
 class ZipInputController extends Controller
 {
-    public function create(Request $request)
+    public function find(Request $request)
     {
         // Check if this entry exists
         $zipDAO = new ZipCodeDAO();

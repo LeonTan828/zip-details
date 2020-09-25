@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index');
 
-Route::post('/create', 'ZipInputController@create');
+Route::post('/create', 'ZipInputController@find');
 
 Route::get('/match', 'ZipMatchController@index');
 
