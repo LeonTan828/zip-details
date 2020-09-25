@@ -19,7 +19,7 @@ class ZipInputController extends Controller
 
             // Making api call
             $zipaccess = new ZipCodeAccessor();
-            $model = $zipaccess->index($request->zip_code);
+            $model = $zipaccess->zipToLoc($request->zip_code);
 
             if (gettype($model) == "integer") {
                 if ($model == 0) {

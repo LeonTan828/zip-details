@@ -50,7 +50,7 @@ class ZipMatchController extends Controller
             echo "nothing found in db";
 
             // Making api call
-            $zip1 = $zipaccess->index($request->zip_code1);
+            $zip1 = $zipaccess->zipToLoc($request->zip_code1);
             
             // Store in db
             $zipDAO->index($zip1);
@@ -63,7 +63,7 @@ class ZipMatchController extends Controller
             echo "nothing found in db";
 
             // Making api call
-            $zip2 = $zipaccess->index($request->zip_code2);
+            $zip2 = $zipaccess->zipToLoc($request->zip_code2);
 
             // Store in db
             $zipDAO->index($zip2);

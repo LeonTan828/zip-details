@@ -8,7 +8,7 @@ use GuzzleHttp\Exception\RequestException;
 
 class ZipCodeAccessor
 {
-    public function index($zip)
+    public function zipToLoc($zip)
     {
         $client = new Client();
 
