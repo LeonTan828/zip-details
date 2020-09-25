@@ -27,7 +27,11 @@
 
     <h3> 
     
-        @if ($zip1 != "")
+        @if ($zip1 == "")
+        <p> Please provide valid input </p>
+        @elseif ($zip1 == "no match")
+        <p> no match is found</p>
+        @else
 
         <p>Zip Code:    {{ $zip1->zip_code }}
         <br>

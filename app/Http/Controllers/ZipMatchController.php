@@ -25,7 +25,19 @@ class ZipMatchController extends Controller
                                         $request->dist, 
                                         $request->distunit);
 
-        
+        if (gettype($matchresult) == "integer") {
+            if ($matchresult == 0) {
+                return view('match', [
+                    'zip1' => ""
+                ]);
+            } 
+            else if ($matchresult == 1) {
+                return view('match', [
+                    'zip1' => "no match"
+                ]);
+            }
+        }
+
         $zipaccess = new ZipCodeAccessor();
         $zip1 = $zipaccess->index($matchresult->zip_code1);
         $zip2 = $zipaccess->index($matchresult->zip_code2);
