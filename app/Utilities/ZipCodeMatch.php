@@ -5,6 +5,8 @@ namespace App\Utilities;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use App\Utilities\ZipCodeAccessor;
+use App\Utilities\ZipCodeDAO;
 
 class ZipCodeMatch
 {
@@ -36,5 +38,28 @@ class ZipCodeMatch
         // return 1 if no match is found
         if (sizeof($body) == 0) return 1;
         return $body[0];
+    }
+
+    public function get($zip_code)
+    {
+        $zipaccess = new ZipCodeAccessor();
+        $zipDAO = new ZipCodeDAO();
+
+        $found  = $zipDAO->find($zip_code);
+
+        if (!$found) {
+            echo "nothing found in db";
+
+            // Making api call
+            $zip = $zipaccess->zipToLoc($zip_code);
+            
+            // Store in db
+            $zipDAO->add($zip);
+        } else {
+            echo "found";
+            $zip = $zipDAO->get($zip_code);
+        }
+
+        return $zip;
     }
 }
