@@ -6,22 +6,30 @@ use Illuminate\Http\Request;
 use App\Utilities\ZipCodeAccessor;
 use App\Utilities\ZipCodeDAO;
 
-
 class ZipInputController extends Controller
 {
     public function create(Request $request)
     {
-        
-        // Making api call
-        $zipaccess = new ZipCodeAccessor();
-        $resultbody = $zipaccess->index($request->zip_code);
+        // Check if this entry exists
+        $zipDAO = new ZipCodeDAO();
+        $found = $zipDAO->find($request->zip_code);
 
-        // Store in db
-        $zipstore = new ZipCodeDAO();
-        $zipstore->index($resultbody);
+        if (!$found) {
+            echo "nothing found in db";
+
+            // Making api call
+            $zipaccess = new ZipCodeAccessor();
+            $model = $zipaccess->index($request->zip_code);
+
+            // Store in db
+            $zipDAO->index($model);
+        } else {
+            echo "found";
+            $model = $zipDAO->get($request->zip_code);
+        }
 
         return view('home', [
-            'results' => $resultbody
+            'results' => $model
         ]);
 
         // return redirect('/');
