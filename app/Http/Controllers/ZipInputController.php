@@ -34,7 +34,7 @@ class ZipInputController extends Controller
                 } 
             }
             // Store in db
-            $zipDAO->index($model);
+            $zipDAO->add($model);
         } else {
             echo "found";
             $model = $zipDAO->get($request->zip_code);
