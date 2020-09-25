@@ -11,7 +11,7 @@ use App\Models\CityName;
 
 class ZipCodeDAO
 {
-    public function index($resultbody)
+    public function add($resultbody)
     {
         // Store in zipinputs table
         $input = new ZipInput();

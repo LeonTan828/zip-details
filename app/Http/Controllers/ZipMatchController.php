@@ -53,7 +53,7 @@ class ZipMatchController extends Controller
             $zip1 = $zipaccess->zipToLoc($request->zip_code1);
             
             // Store in db
-            $zipDAO->index($zip1);
+            $zipDAO->add($zip1);
         } else {
             echo "found";
             $zip1 = $zipDAO->get($request->zip_code1);
@@ -66,22 +66,15 @@ class ZipMatchController extends Controller
             $zip2 = $zipaccess->zipToLoc($request->zip_code2);
 
             // Store in db
-            $zipDAO->index($zip2);
+            $zipDAO->add($zip2);
         } else {
             echo "found";
             $zip2 = $zipDAO->get($request->zip_code2);
         }
 
-        
-
-        // $zipaccess = new ZipCodeAccessor();
-        // $zip1 = $zipaccess->index($matchresult->zip_code1);
-        // $zip2 = $zipaccess->index($matchresult->zip_code2);
-
         return view('match', [
             'zip1' => $zip1,
             'zip2' => $zip2
         ]);
-        // $resultbody = $zipaccess->index($request->zip_code);
     }
 }
