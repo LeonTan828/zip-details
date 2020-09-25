@@ -23,19 +23,18 @@ class ZipInputController extends Controller
 
             if (gettype($model) == "integer") {
                 if ($model == 0) {
-                    return view('home', [
-                        'results' => ""
-                    ]);
+                    $model = "";
                 }
                 else if ($model == 1) {
-                    return view('home', [
-                        'results' => "zip not found"
-                    ]);
+                    $model = 'zip not found';
                 } 
             }
-            // Store in db
-            $zipDAO->add($model);
-        } else {
+            else {
+                $zipDAO->add($model);
+            }
+            
+        }
+        else {
             echo "found";
             $model = $zipDAO->get($request->zip_code);
         }
