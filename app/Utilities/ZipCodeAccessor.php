@@ -5,6 +5,7 @@ namespace App\Utilities;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use App\Utilities\ZipCodeDAO;
 
 class ZipCodeAccessor
 {
@@ -34,5 +35,38 @@ class ZipCodeAccessor
         $body = $response->getBody()->getContents();
 
         return json_decode($body);
+    }
+
+    public function get($zip_code) {
+
+        // Check if this entry exists
+        $zipDAO = new ZipCodeDAO();
+        $found = $zipDAO->find($zip_code);
+
+        if (!$found) {
+            echo "nothing found in db";
+
+            // Making api call
+            $model = $this->zipToLoc($zip_code);
+
+            if (gettype($model) == "integer") {
+                if ($model == 0) {
+                    $model = "";
+                }
+                else if ($model == 1) {
+                    $model = 'zip not found';
+                } 
+            }
+            else {
+                $zipDAO->add($model);
+            }
+            
+        }
+        else {
+            echo "found";
+            $model = $zipDAO->get($zip_code);
+        }
+
+        return $model;
     }
 }
