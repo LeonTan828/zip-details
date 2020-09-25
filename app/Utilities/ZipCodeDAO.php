@@ -22,12 +22,18 @@ class ZipCodeDAO
         $input->state = $resultbody->state;
         $input->timezone_identifier = $resultbody->timezone->timezone_identifier;
 
-        // NOTE need to check before adding
-        $timezoneInput = new Timezone();
-        $timezoneInput->timezone_identifier = $resultbody->timezone->timezone_identifier;
-        $timezoneInput->timezone_abbr = $resultbody->timezone->timezone_abbr;
-        $timezoneInput->utc_offset_sec = $resultbody->timezone->utc_offset_sec;
-        $timezoneInput->is_dst = $resultbody->timezone->is_dst;
+        $input->save();
+
+        // If timezone cannot be found, add
+        if (!$this->findtime($resultbody->timezone->timezone_identifier)) {
+            $timezoneInput = new Timezone();
+            $timezoneInput->timezone_identifier = $resultbody->timezone->timezone_identifier;
+            $timezoneInput->timezone_abbr = $resultbody->timezone->timezone_abbr;
+            $timezoneInput->utc_offset_sec = $resultbody->timezone->utc_offset_sec;
+            $timezoneInput->is_dst = $resultbody->timezone->is_dst;
+
+            $timezoneInput->save();
+        }
 
         foreach ($resultbody->acceptable_city_names as $cityname) {
             $cityInput = new CityName();
@@ -46,15 +52,20 @@ class ZipCodeDAO
             $areaInput->save();
         }
 
-        $timezoneInput->save();
-        $input->save();
-
         return;
     }
 
     public function find($zip_code)
     {
         $found = DB::table('zipinputs')->where('zip_code', $zip_code)->first();
+
+        if (!$found) return false;
+        else return true;
+    }
+
+    public function findtime($id)
+    {
+        $found = DB::table('timezones')->where('timezone_identifier', $id)->first();
 
         if (!$found) return false;
         else return true;
