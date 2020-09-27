@@ -7,12 +7,21 @@ use App\Utilities\ZipCodeAccessor;
 
 class ZipInputController extends Controller
 {
+    public function index()
+    {
+        $model = "";
+
+        return view('zipdetail', [
+            'results' => $model
+        ]); 
+    }
+    
     public function find(Request $request)
     {
         $zipaccess = new ZipCodeAccessor();
         $model = $zipaccess->get($request->zip_code);
 
-        return view('home', [
+        return view('zipdetail', [
             'results' => $model
         ]);
 
