@@ -25,7 +25,7 @@ class ZipCodeDAO
         $input->save();
 
         // If timezone cannot be found, add
-        if (!$this->findtime($resultbody->timezone->timezone_identifier)) {
+        if (!$this->containsTime($resultbody->timezone->timezone_identifier)) {
             $timezoneInput = new Timezone();
             $timezoneInput->timezone_identifier = $resultbody->timezone->timezone_identifier;
             $timezoneInput->timezone_abbr = $resultbody->timezone->timezone_abbr;
@@ -55,7 +55,7 @@ class ZipCodeDAO
         return;
     }
 
-    public function find($zip_code)
+    public function contains($zip_code)
     {
         $found = DB::table('zipinputs')->where('zip_code', $zip_code)->first();
 
@@ -63,7 +63,7 @@ class ZipCodeDAO
         else return true;
     }
 
-    public function findtime($id)
+    public function containsTime($id)
     {
         $found = DB::table('timezones')->where('timezone_identifier', $id)->first();
 

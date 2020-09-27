@@ -14,7 +14,7 @@ class ZipCodeMatch
     {
         $client = new Client();
 
-        $api_key = 'UcROKGLFeLnue77m4SgRuUHlrNYpgDl8UvOfdIWO0BTSNfoqz19zpK3w6HlLTTGC';
+        $api_key = 'fjf6y8FPeH5v2RyDScQ5FXfOQPOznHdjWUROZ4VvIlW5KWYWMiz3cUH4nRwJQqlk';
         $format = 'json';
         $zipcodes = "".$zip1.",".$zip2;
         $api_url = 'http://www.zipcodeapi.com/rest/'.$api_key.'/match-close.'.$format.'/'.$zipcodes.'/'.$dist.'/'.$distunit;
@@ -45,7 +45,7 @@ class ZipCodeMatch
         $zipaccess = new ZipCodeAccessor();
         $zipDAO = new ZipCodeDAO();
 
-        $found  = $zipDAO->find($zip_code);
+        $found  = $zipDAO->contains($zip_code);
 
         if (!$found) {
             echo "nothing found in db";

@@ -13,7 +13,7 @@ class ZipCodeAccessor
     {
         $client = new Client();
 
-        $api_key = 'UcROKGLFeLnue77m4SgRuUHlrNYpgDl8UvOfdIWO0BTSNfoqz19zpK3w6HlLTTGC';
+        $api_key = 'fjf6y8FPeH5v2RyDScQ5FXfOQPOznHdjWUROZ4VvIlW5KWYWMiz3cUH4nRwJQqlk';
         $format = 'json';
         $units = 'degrees';
         $api_url = 'http://www.zipcodeapi.com/rest/'.$api_key.'/info.'.$format.'/'.$zip.'/'.$units;
@@ -41,7 +41,7 @@ class ZipCodeAccessor
 
         // Check if this entry exists
         $zipDAO = new ZipCodeDAO();
-        $found = $zipDAO->find($zip_code);
+        $found = $zipDAO->contains($zip_code);
 
         if (!$found) {
             echo "nothing found in db";
