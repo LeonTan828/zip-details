@@ -9,6 +9,12 @@ use App\Models\Timezone;
 use App\Models\AreaCode;
 use App\Models\CityName;
 
+/**
+ * ZipCodeDAO is a class that handles access and interaction with the databse
+ * 
+ * ZipCodeDAO handles data entry, lookup and retrieval. Uses Eloquent and Query
+ * Builder 
+ */
 class ZipCodeDAO
 {
     public function add($resultbody)
@@ -24,7 +30,7 @@ class ZipCodeDAO
 
         $input->save();
 
-        // If timezone cannot be found, add
+        // If timezone cannot be found, add to timezones table
         if (!$this->containsTime($resultbody->timezone->timezone_identifier)) {
             $timezoneInput = new Timezone();
             $timezoneInput->timezone_identifier = $resultbody->timezone->timezone_identifier;
@@ -35,6 +41,7 @@ class ZipCodeDAO
             $timezoneInput->save();
         }
 
+        // Store each acceptable city names citynames table
         foreach ($resultbody->acceptable_city_names as $cityname) {
             $cityInput = new CityName();
             $cityInput->city = $cityname->city;
@@ -44,6 +51,7 @@ class ZipCodeDAO
             $cityInput->save();
         }
 
+        // Store each area codes in areacodes table
         foreach ($resultbody->area_codes as $areacode) {
             $areaInput = new AreaCode();
             $areaInput->area_code = $areacode;
@@ -79,6 +87,7 @@ class ZipCodeDAO
         $citynames = DB::table('citynames')->where('zip_code', $zip_code)->get();
         $areacodes = DB::table('areacodes')->where('zip_code', $zip_code)->get();
 
+        // Make acceptable city names object
         $cityArray = array();
         foreach ($citynames as $city) {
             $citynameobj = new AcceptableCity();
@@ -88,6 +97,7 @@ class ZipCodeDAO
             array_push($cityArray, $citynameobj);
         }
 
+        // Make area code array
         $areacodeArray = array();
         foreach ($areacodes as $areacode) {
             array_push($areacodeArray, $areacode->area_code);

@@ -8,6 +8,14 @@ use GuzzleHttp\Exception\RequestException;
 use App\Utilities\ZipCodeAccessor;
 use App\Utilities\ZipCodeDAO;
 
+/**
+ * A class for handling matching zip codes and retrieval of location details for
+ * those zip codes
+ * 
+ * Mainly called by ZipMatchController
+ * 
+ * Involves API calls and database retrieval
+ */
 class ZipCodeMatch
 {
     public function findMatch($zip1, $zip2, $dist, $distunit)
@@ -19,7 +27,7 @@ class ZipCodeMatch
         $zipcodes = "".$zip1.",".$zip2;
         $api_url = 'http://www.zipcodeapi.com/rest/'.$api_key.'/match-close.'.$format.'/'.$zipcodes.'/'.$dist.'/'.$distunit;
 
-
+        // Make API call
         try {
             $response = $client->request('GET', $api_url);
         } catch (RequestException $e) {
@@ -53,9 +61,11 @@ class ZipCodeMatch
             // Making api call
             $zip = $zipaccess->zipToLoc($zip_code);
             
-            // Store in db
+            // Store in DB
             $zipDAO->add($zip);
-        } else {
+        }
+        // If found, get from DB
+        else {
             echo "found";
             $zip = $zipDAO->get($zip_code);
         }
