@@ -19,7 +19,7 @@ class ZipMatchController extends Controller
     {
         $zipmatch = new ZipCodeAccessor();
         $zipcodes = array($request->zip_code1, $request->zip_code2);
-        $matchresult = $zipmatch->findZipMatchAPI($zipcodes, 
+        $matchresult = $zipmatch->findZipCloseMatchAPI($zipcodes, 
                                         $request->dist, 
                                         $request->distunit);
 

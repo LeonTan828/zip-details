@@ -61,7 +61,7 @@ class ZipCodeAccessor
         );
     }
 
-    public function findZipMatchAPI($zips, $dist, $distunit)
+    public function findZipCloseMatchAPI($zips, $dist, $distunit)
     {
         foreach ($zips as $zip) {
             if (!$this->validateZipCodeFormat($zip)) {
