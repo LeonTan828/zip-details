@@ -17,6 +17,6 @@
     </form>
 
     <br>
-    @include('components.table', ['results'=>array($results), 'condition'=>$condition])
+    @include('components.table', ['zipCodes'=>array($results), 'condition'=>$condition])
 
 @endsection

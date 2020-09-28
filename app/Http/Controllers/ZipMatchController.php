@@ -3,48 +3,46 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Utilities\ZipCodeMatch;
+use App\Utilities\ZipCodeAccessor;
 
 class ZipMatchController extends Controller
 {
     public function index()
     {
-        $zip1 = "first";
-        $zip2 = "first";
-
         return view('match', [
-            'zip1' => $zip1,
-            'zip2' => $zip2
+            'zipCodePairs' => array(),
+            'condition' => null
         ]);
     }
 
     public function match(Request $request)
     {
-        $zipmatch = new ZipCodeMatch();
-        $matchresult = $zipmatch->findMatch( $request->zip_code1, 
-                                        $request->zip_code2, 
+        $zipmatch = new ZipCodeAccessor();
+        $zipcodes = array($request->zip_code1, $request->zip_code2);
+        $matchresult = $zipmatch->findMatch($zipcodes, 
                                         $request->dist, 
                                         $request->distunit);
 
-        $zip1 = null;
-        $zip2 = null;
+        $zipCodePairs = array();
+        $errorMessage = null;
 
-        if (gettype($matchresult) == "integer") {
-            if ($matchresult == 0) {
-                $zip1 = "";
-            } 
-            else if ($matchresult == 1) {
-                $zip1 = "no match";
-            }
+        if ($matchresult['error']) {
+            $errorMessage = $matchresult['error'];
         }
         else {
-            $zip1 = $zipmatch->get($request->zip_code1);
-            $zip2 = $zipmatch->get($request->zip_code2);
+            foreach ($matchresult['match'] as $match) {
+                $zipCodePair = array($zipmatch->get($match->zip_code1)['model'],
+                                    $zipmatch->get($match->zip_code2)['model']);
+                
+                array_push($zipCodePairs, $zipCodePair);
+            }
         }
 
+        // TODO model
+        
         return view('match', [
-            'zip1' => $zip1,
-            'zip2' => $zip2
+            'zipCodePairs' => $zipCodePairs,
+            'condition' => $errorMessage
         ]);
     }
 }

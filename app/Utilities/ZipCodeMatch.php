@@ -34,7 +34,7 @@ class ZipCodeMatch
             // If bad request error, return 0
             if ($e->hasResponse()) {
                 if ($e->getResponse()->getStatusCode() >= '400') {
-                    return 0;
+                    return "Bad Request";
                 }
             }
         }
@@ -44,8 +44,11 @@ class ZipCodeMatch
         $body = json_decode($body);
 
         // return 1 if no match is found
-        if (sizeof($body) == 0) return 1;
-        return $body[0];
+        if (sizeof($body) == 0) {
+            return "No match";
+        }
+        return "Match found";
+        // return $body[0];
     }
 
     public function get($zip_code)

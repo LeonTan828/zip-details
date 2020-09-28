@@ -21,19 +21,19 @@
     <th>Acceptable<br>City Names</th>
     <th>Area<br>Codes</th>
 </tr>
-@foreach ($results as $result)
+@foreach ($zipCodes as $zipCode)
 <tr>
-    <td>{{ $result->zip_code }}</td>
-    <td>{{ $result->lat }}</td>
-    <td>{{ $result->lng }}</td>
-    <td>{{ $result->city }}</td>
-    <td>{{ $result->state }}</td>
-    <td>{{ $result->timezone->timezone_identifier }}</td>
-    <td>{{ $result->timezone->timezone_abbr }}</td>
-    <td>{{ $result->timezone->utc_offset_sec }}</td>
-    <td>{{ $result->timezone->is_dst }}</td>
+    <td>{{ $zipCode->zip_code }}</td>
+    <td>{{ $zipCode->lat }}</td>
+    <td>{{ $zipCode->lng }}</td>
+    <td>{{ $zipCode->city }}</td>
+    <td>{{ $zipCode->state }}</td>
+    <td>{{ $zipCode->timezone->timezone_identifier }}</td>
+    <td>{{ $zipCode->timezone->timezone_abbr }}</td>
+    <td>{{ $zipCode->timezone->utc_offset_sec }}</td>
+    <td>{{ $zipCode->timezone->is_dst }}</td>
     <td>
-        @foreach ($result->acceptable_city_names as $city_name)
+        @foreach ($zipCode->acceptable_city_names as $city_name)
             City: {{ $city_name->city }}
             <br>
             State: {{ $city_name->state }}
@@ -42,7 +42,7 @@
         @endforeach
     </td>
     <td>
-        @foreach ($result->area_codes as $areacode)
+        @foreach ($zipCode->area_codes as $areacode)
             {{ $areacode }}
             <br>
         @endforeach

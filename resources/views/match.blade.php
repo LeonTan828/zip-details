@@ -22,7 +22,11 @@
         {{ csrf_field() }}
         <button type="submit">Submit</button>
     </form>
-    @include('components.table', ['results'=>array($zip1, $zip2)])
+
+    @foreach ($zipCodePairs as $pair)
+        @include('components.table', ['zipCodes' => $pair, 'condition' => $condition])
+        <br>
+    @endforeach
     
 
 
