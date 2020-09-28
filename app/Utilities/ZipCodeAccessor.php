@@ -65,7 +65,6 @@ class ZipCodeAccessor
     {
         foreach ($zips as $zip) {
             if (!$this->validateZipCodeFormat($zip)) {
-                echo "throw here";
                 return array(
                     'details' => null,
                     'error' => 'Bad Request'
@@ -109,20 +108,19 @@ class ZipCodeAccessor
 
         // Get from API if not found in DB
         if (!$found) {
-            echo 'nothing found in db';
-
             $apiResult = $this->getZipDetailAPI($zip_code);
 
             if ($apiResult['details']) {
                 $zipDAO->add($apiResult['details']);
+                $apiResult['details']->source = 'API';
             }
+
             return $apiResult;
-            
         }
         // Retrieve from DB if already exist
         else {
-            echo "found";
             $details = $zipDAO->getFromDB($zip_code);
+            $details->source = 'Database';
 
             return array(
                 'details' => $details,

@@ -15,6 +15,7 @@
     <th>Daylight<br>Saving</th>
     <th>Acceptable<br>City Names</th>
     <th>Area<br>Codes</th>
+    <th>Data<br>Source</th>
 </tr>
 @foreach ($zipCodes as $zipCode)
 <tr>
@@ -42,6 +43,7 @@
             <br>
         @endforeach
     </td>
+    <td>{{ $zipCode->source }}</td>
 </tr>
 @endforeach
 </table>
