@@ -21,9 +21,20 @@ class ZipCodeAccessor
         $this->api_key = env('ZIPCODEAPIKEY', '');
     }
 
+    private function validateZipCodeFormat($zip_code) {
+        return (is_numeric($zip_code) && strlen($zip_code) == 5);
+    }
+
     // TODO getlocationdetail
     public function zipToLoc($zip)
     {
+        if (!$this->validateZipCodeFormat($zip)) {
+            return array(
+                'model' => null,
+                'error' => 'Bad Request'
+            );
+        }
+
         $client = new Client();
         
         $format = 'json';
@@ -35,15 +46,7 @@ class ZipCodeAccessor
             $response = $client->request('GET', $api_url);
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
-                // If bad request error (aka invalid input), return 0
-                if ($e->getResponse()->getStatusCode() == '400') {
-                    return array(
-                        'model' => null,
-                        'error' => 'Bad Request'
-                    );
-                }
-                // If zip code doesn't exist, return 1
-                else if ($e->getResponse()->getStatusCode() == '404') {
+                if ($e->getResponse()->getStatusCode() == '404') {
                     return array(
                         'model' => null,
                         'error' => 'Zip not found'
