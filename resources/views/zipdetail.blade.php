@@ -7,6 +7,10 @@
 
 @section('content')
 
+    <div class="links">
+        <a href="http://eatstreet-takehome.test/">Back to Homepage</a>
+        <a href="http://eatstreet-takehome.test/match">Check Zip Code Match</a>
+    </div>
 
     <p>Please type in a zip code below and click submit</p>
 
