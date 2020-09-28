@@ -9,7 +9,7 @@ class ZipInputController extends Controller
 {
     public function index()
     {
-        $model = "";
+        $model = "first";
 
         return view('zipdetail', [
             'results' => $model
