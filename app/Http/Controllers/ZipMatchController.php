@@ -15,11 +15,11 @@ class ZipMatchController extends Controller
         ]);
     }
 
-    public function match(Request $request)
+    public function checkMatch(Request $request)
     {
         $zipmatch = new ZipCodeAccessor();
         $zipcodes = array($request->zip_code1, $request->zip_code2);
-        $matchresult = $zipmatch->findMatch($zipcodes, 
+        $matchresult = $zipmatch->findMatchAPI($zipcodes, 
                                         $request->dist, 
                                         $request->distunit);
 
@@ -34,8 +34,8 @@ class ZipMatchController extends Controller
         }
         else {
             foreach ($matchresult['match'] as $match) {
-                $zipCodePair = array($zipmatch->get($match->zip_code1)['model'],
-                                    $zipmatch->get($match->zip_code2)['model']);
+                $zipCodePair = array($zipmatch->getLocationDetails($match->zip_code1)['model'],
+                                    $zipmatch->getLocationDetails($match->zip_code2)['model']);
                 
                 array_push($zipCodePairs, $zipCodePair);
             }

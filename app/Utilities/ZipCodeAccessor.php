@@ -26,7 +26,7 @@ class ZipCodeAccessor
     }
 
     // TODO getlocationdetail
-    public function zipToLoc($zip)
+    public function getDetailAPI($zip)
     {
         if (!$this->validateZipCodeFormat($zip)) {
             return array(
@@ -64,7 +64,7 @@ class ZipCodeAccessor
     }
 
     // TODO find closest zip code pair
-    public function findMatch($zips, $dist, $distunit)
+    public function findMatchAPI($zips, $dist, $distunit)
     {
         $client = new Client();
 
@@ -106,9 +106,9 @@ class ZipCodeAccessor
         // return $body[0];
     }
 
-    public function get($zip_code) {
+    public function getLocationDetails($zip_code) {
 
-        // Check if this entry exists
+        // Check if this entry exists in DB
         $zipDAO = new ZipCodeDAO();
         $found = $zipDAO->contains($zip_code);
 
@@ -117,7 +117,7 @@ class ZipCodeAccessor
             echo "nothing found in db";
 
             // Making api call
-            $apiResult = $this->zipToLoc($zip_code);
+            $apiResult = $this->getDetailAPI($zip_code);
 
             if ($apiResult['model']) {
                 $zipDAO->add($apiResult['model']);
@@ -128,7 +128,7 @@ class ZipCodeAccessor
         // Retrieve from DB if already exist
         else {
             echo "found";
-            $model = $zipDAO->get($zip_code);
+            $model = $zipDAO->getFromDB($zip_code);
 
             return array(
                 "model" => $model,

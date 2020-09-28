@@ -9,7 +9,7 @@
 
     <div class="links">
         <a href="http://eatstreet-takehome.test/">Back to Homepage</a>
-        <a href="http://eatstreet-takehome.test/details">Check Zip Code Details</a>
+        <a href="http://eatstreet-takehome.test/locationdetails">Check Zip Code Details</a>
     </div>
     
     <p>Type in 2 zip codes below, one distance and click submit</p>

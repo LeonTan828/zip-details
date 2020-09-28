@@ -79,7 +79,7 @@ class ZipCodeDAO
         else return true;
     }
 
-    public function get($zip_code)
+    public function getFromDB($zip_code)
     {
         $data = DB::table('zipinputs')->where('zip_code', $zip_code)->first();
 

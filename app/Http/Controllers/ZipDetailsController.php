@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Utilities\ZipCodeAccessor;
 
-class ZipInputController extends Controller
+class ZipDetailsController extends Controller
 {
     public function index()
     {
@@ -17,10 +17,10 @@ class ZipInputController extends Controller
         ]); 
     }
     
-    public function find(Request $request)
+    public function getDetails(Request $request)
     {
         $zipaccess = new ZipCodeAccessor();
-        $zipaccessresult = $zipaccess->get($request->zip_code);
+        $zipaccessresult = $zipaccess->getLocationDetails($request->zip_code);
 
         $models = array();
         if ($zipaccessresult['model']) {
@@ -31,7 +31,5 @@ class ZipInputController extends Controller
             'results' => $models,
             'condition' => $zipaccessresult['error']
         ]);
-
-        // return redirect('/');
     }
 }

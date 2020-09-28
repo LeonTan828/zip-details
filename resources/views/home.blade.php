@@ -13,7 +13,7 @@
         want to visit
     </p>
     <div class="links">
-        <a href="http://eatstreet-takehome.test/details">Get Zip Code Details</a>
+        <a href="http://eatstreet-takehome.test/locationdetails">Get Zip Code Details</a>
         <a href="http://eatstreet-takehome.test/match">Check Zip Code Match</a>
     </div>
 
