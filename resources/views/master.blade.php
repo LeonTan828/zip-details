@@ -23,7 +23,7 @@
             }
 
             .pad-bottom {
-                padding-bottom: 2em;
+                padding-bottom: 5em;
             }
 
             .flex-center {
@@ -61,6 +61,14 @@
                 letter-spacing: .1rem;
                 text-decoration: none;
                 text-transform: uppercase;
+            }
+
+            a:hover {
+                color: #5ac18e;
+            }
+
+            .error-display {
+                color: #ee608b;
             }
 
             .m-b-md {
