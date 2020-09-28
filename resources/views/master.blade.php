@@ -69,7 +69,6 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">Zip Code to Location</div>
-                <p>Please type in the Zip code to show information</p>
 
                     @yield('content')
 

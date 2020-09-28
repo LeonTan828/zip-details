@@ -7,24 +7,14 @@
 
 @section('content')
 
+    <p>The is a demo for an EatStreet take home assignment</p>
+    <p>
+        Please click on any of the link below to navigate to the page that you
+        want to visit
+    </p>
     <div class="links">
-        <a href="http://eatstreet-takehome.test/details">try </a>
+        <a href="http://eatstreet-takehome.test/details">Get Zip Code Details</a>
+        <a href="http://eatstreet-takehome.test/match">Check Zip Code Match</a>
     </div>
-
-    <p>Type in the zip code below and click submit</p>
-
-    <form action="/details" method="get">
-        {{ csrf_field() }}
-        <button type="submit">Find Zip Code Details</button>
-    </form>
-
-    <br>
-
-    <form action="/match" method="get">
-        {{ csrf_field() }}
-        <button type="submit">Go to Zip Code Matching</button>
-    </form>
-
-
 
 @endsection
