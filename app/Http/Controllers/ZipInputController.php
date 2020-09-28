@@ -9,20 +9,22 @@ class ZipInputController extends Controller
 {
     public function index()
     {
-        $model = "first";
+        $condition = "first";
 
         return view('zipdetail', [
-            'results' => $model
+            'results' => null,
+            'condition' => $condition
         ]); 
     }
     
     public function find(Request $request)
     {
         $zipaccess = new ZipCodeAccessor();
-        $model = $zipaccess->get($request->zip_code);
+        $zipaccessresult = $zipaccess->get($request->zip_code);
 
         return view('zipdetail', [
-            'results' => $model
+            'results' => $zipaccessresult['model'],
+            'condition' => $zipaccessresult['error']
         ]);
 
         // return redirect('/');

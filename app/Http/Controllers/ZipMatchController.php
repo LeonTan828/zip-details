@@ -10,9 +10,11 @@ class ZipMatchController extends Controller
     public function index()
     {
         $zip1 = "first";
+        $zip2 = "first";
 
         return view('match', [
-            'zip1' => $zip1
+            'zip1' => $zip1,
+            'zip2' => $zip2
         ]);
     }
 

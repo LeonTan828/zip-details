@@ -31,18 +31,27 @@ class ZipCodeAccessor
             if ($e->hasResponse()) {
                 // If bad request error (aka invalid input), return 0
                 if ($e->getResponse()->getStatusCode() == '400') {
-                    return 0;
+                    return array(
+                        'model' => null,
+                        'error' => 'Bad Request'
+                    );
                 }
                 // If zip code doesn't exist, return 1
                 else if ($e->getResponse()->getStatusCode() == '404') {
-                    return 1;
+                    return array(
+                        'model' => null,
+                        'error' => 'Zip not found'
+                    );
                 }
             }
         }
         $statusCode = $response->getStatusCode();
         $body = $response->getBody()->getContents();
 
-        return json_decode($body);
+        return array(
+            'model' => json_decode($body),
+            'error' => null
+        );
     }
 
     public function get($zip_code) {
@@ -56,30 +65,28 @@ class ZipCodeAccessor
             echo "nothing found in db";
 
             // Making api call
-            $model = $this->zipToLoc($zip_code);
+            $apiResult = $this->zipToLoc($zip_code);
 
-            if (gettype($model) == "integer") {
-                // If invalid input
-                if ($model == 0) {
-                    $model = "";
-                }
-                // If zip code doesn't exist
-                else if ($model == 1) {
-                    $model = 'zip not found';
-                } 
+            if ($apiResult['model']) {
+                $zipDAO->add($apiResult['model']);
             }
-            // API returns correctly, add to DB
-            else {
-                $zipDAO->add($model);
-            }
+            return $apiResult;
             
         }
         // Retrieve from DB if already exist
         else {
             echo "found";
             $model = $zipDAO->get($zip_code);
+
+            return array(
+                "model" => $model,
+                "error" => null
+            );
         }
 
-        return $model;
+        // return array(
+        //     "model" => $model,
+        //     "error" => $error
+        // );
     }
 }

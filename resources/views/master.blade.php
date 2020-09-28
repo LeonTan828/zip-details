@@ -22,8 +22,8 @@
                 margin: 0;
             }
 
-            .full-height {
-                height: 100vh;
+            .pad-bottom {
+                padding-bottom: 2em;
             }
 
             .flex-center {
@@ -36,18 +36,21 @@
                 position: relative;
             }
 
-            .top-right {
+            .top-left {
                 position: absolute;
-                right: 10px;
+                left: 10px;
                 top: 18px;
             }
 
-            .content {
+            .text-center {
                 text-align: center;
             }
 
             .title {
                 font-size: 84px;
+                text-align: center;
+                padding-top: 1em;
+                padding-bottom: 1em;
             }
 
             .links > a {
@@ -63,14 +66,34 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            table {
+                border: 1px rgb(230,230,230) solid;
+                border-radius: 20px;
+                border-collapse: collapse;
+            }
+
+            table td {
+                padding: 0.5em;
+                border: 1px rgb(230,230,230) solid;
+            }
+
+            table th {
+                padding: 0.5em;
+                border: 1px rgb(230,230,230) solid;
+            }
+
+            table tr:first-child th:first-child{
+                border-top-left-radius: 20px;
+            }
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            <div class="content">
-                <div class="title m-b-md">Zip Code to Location</div>
+        <div class="title m-b-md">Zip Code to Location</div>
+        <div class="flex-center position-ref pad-bottom">
+            <div class="text-center">
 
-                    @yield('content')
+                @yield('content')
 
             </div>
 
