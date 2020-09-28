@@ -9,27 +9,25 @@ class ZipDetailsController extends Controller
 {
     public function index()
     {
-        $condition = "first";
-
         return view('zipdetail', [
-            'results' => array(),
-            'condition' => $condition
+            'zipCodes' => array(),
+            'error' => null
         ]); 
     }
     
     public function getDetails(Request $request)
     {
         $zipaccess = new ZipCodeAccessor();
-        $zipaccessresult = $zipaccess->getLocationDetails($request->zip_code);
+        $zipresult = $zipaccess->getLocationDetails($request->zip_code);
 
-        $models = array();
-        if ($zipaccessresult['model']) {
-            array_push($models, $zipaccessresult['model']);
+        $details = array();
+        if ($zipresult['details']) {
+            array_push($details, $zipresult['details']);
         }
 
         return view('zipdetail', [
-            'results' => $models,
-            'condition' => $zipaccessresult['error']
+            'zipCodes' => $details,
+            'error' => $zipresult['error']
         ]);
     }
 }

@@ -27,7 +27,7 @@
         <button type="submit">Submit</button>
     </form>
 
-    @include('components.errormessage', ['condition'=>$condition])
+    @include('components.errormessage', ['error'=>$error])
     @foreach ($zipCodePairs as $pair)
         @include('components.table', ['zipCodes' => $pair])
         <br>

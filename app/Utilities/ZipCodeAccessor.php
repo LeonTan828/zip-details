@@ -25,62 +25,66 @@ class ZipCodeAccessor
         return (is_numeric($zip_code) && strlen($zip_code) == 5);
     }
 
-    // TODO getlocationdetail
-    public function getDetailAPI($zip)
+    public function getZipDetailAPI($zip)
     {
         if (!$this->validateZipCodeFormat($zip)) {
             return array(
-                'model' => null,
+                'details' => null,
                 'error' => 'Bad Request'
             );
         }
 
         $client = new Client();
-        
         $format = 'json';
         $units = 'degrees';
         $api_url = 'http://www.zipcodeapi.com/rest/'.$this->api_key.'/info.'.$format.'/'.$zip.'/'.$units;
 
-        // Make API call
         try {
             $response = $client->request('GET', $api_url);
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
                 if ($e->getResponse()->getStatusCode() == '404') {
                     return array(
-                        'model' => null,
+                        'details' => null,
                         'error' => 'Zip not found'
                     );
                 }
             }
         }
+
         $statusCode = $response->getStatusCode();
         $body = $response->getBody()->getContents();
 
         return array(
-            'model' => json_decode($body),
+            'details' => json_decode($body),
             'error' => null
         );
     }
 
-    // TODO find closest zip code pair
-    public function findMatchAPI($zips, $dist, $distunit)
+    public function findZipMatchAPI($zips, $dist, $distunit)
     {
+        foreach ($zips as $zip) {
+            if (!$this->validateZipCodeFormat($zip)) {
+                echo "throw here";
+                return array(
+                    'details' => null,
+                    'error' => 'Bad Request'
+                );
+            }
+        }
+        
         $client = new Client();
-
         $format = 'json';
-        $zipcodes = implode(",",$zips);
+        $zipcodes = implode(',',$zips);
         $api_url = 'http://www.zipcodeapi.com/rest/'.$this->api_key.'/match-close.'.$format.'/'.$zipcodes.'/'.$dist.'/'.$distunit;
 
-        // Make API call
         try {
             $response = $client->request('GET', $api_url);
         } catch (RequestException $e) {
-            // If bad request error, return 0
             if ($e->hasResponse()) {
                 if ($e->getResponse()->getStatusCode() >= '400') {
                     return array(
-                        'match' => null,
+                        'matches' => null,
                         'error' => "Bad Request"
                     );
                 }
@@ -91,19 +95,10 @@ class ZipCodeAccessor
         $body = $response->getBody()->getContents();
         $body = json_decode($body);
 
-        // TODO
-        // return 1 if no match is found
-        // if (sizeof($body) == 0) {
-        //     return array(
-        //         'match' => null,
-        //         'error' => "No match"
-        //     );
-        // }
         return array(
-            'match' => $body,
+            'matches' => $body,
             'error' => null
         );
-        // return $body[0];
     }
 
     public function getLocationDetails($zip_code) {
@@ -112,15 +107,14 @@ class ZipCodeAccessor
         $zipDAO = new ZipCodeDAO();
         $found = $zipDAO->contains($zip_code);
 
-        // If this zip code is not found in DB
+        // Get from API if not found in DB
         if (!$found) {
-            echo "nothing found in db";
+            echo 'nothing found in db';
 
-            // Making api call
-            $apiResult = $this->getDetailAPI($zip_code);
+            $apiResult = $this->getZipDetailAPI($zip_code);
 
-            if ($apiResult['model']) {
-                $zipDAO->add($apiResult['model']);
+            if ($apiResult['details']) {
+                $zipDAO->add($apiResult['details']);
             }
             return $apiResult;
             
@@ -128,17 +122,12 @@ class ZipCodeAccessor
         // Retrieve from DB if already exist
         else {
             echo "found";
-            $model = $zipDAO->getFromDB($zip_code);
+            $details = $zipDAO->getFromDB($zip_code);
 
             return array(
-                "model" => $model,
-                "error" => null
+                'details' => $details,
+                'error' => null
             );
         }
-
-        // return array(
-        //     "model" => $model,
-        //     "error" => $error
-        // );
     }
 }

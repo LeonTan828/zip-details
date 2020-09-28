@@ -11,7 +11,7 @@ class ZipMatchController extends Controller
     {
         return view('match', [
             'zipCodePairs' => array(),
-            'condition' => null
+            'error' => null
         ]);
     }
 
@@ -19,7 +19,7 @@ class ZipMatchController extends Controller
     {
         $zipmatch = new ZipCodeAccessor();
         $zipcodes = array($request->zip_code1, $request->zip_code2);
-        $matchresult = $zipmatch->findMatchAPI($zipcodes, 
+        $matchresult = $zipmatch->findZipMatchAPI($zipcodes, 
                                         $request->dist, 
                                         $request->distunit);
 
@@ -29,23 +29,21 @@ class ZipMatchController extends Controller
         if ($matchresult['error']) {
             $errorMessage = $matchresult['error'];
         }
-        else if (sizeof($matchresult['match']) == 0) {
+        else if (sizeof($matchresult['matches']) == 0) {
             $errorMessage = 'No Match';
         }
         else {
-            foreach ($matchresult['match'] as $match) {
-                $zipCodePair = array($zipmatch->getLocationDetails($match->zip_code1)['model'],
-                                    $zipmatch->getLocationDetails($match->zip_code2)['model']);
+            foreach ($matchresult['matches'] as $match) {
+                $zipCodePair = array($zipmatch->getLocationDetails($match->zip_code1)['details'],
+                                    $zipmatch->getLocationDetails($match->zip_code2)['details']);
                 
                 array_push($zipCodePairs, $zipCodePair);
             }
         }
-
-        // TODO model
         
         return view('match', [
             'zipCodePairs' => $zipCodePairs,
-            'condition' => $errorMessage
+            'error' => $errorMessage
         ]);
     }
 }

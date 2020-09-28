@@ -10,7 +10,7 @@ use App\Models\AreaCode;
 use App\Models\CityName;
 
 /**
- * ZipCodeDAO is a class that handles access and interaction with the databse
+ * ZipCodeDAO is a class that handles access and interaction with the database
  * 
  * ZipCodeDAO handles data entry, lookup and retrieval. Uses Eloquent and Query
  * Builder 
@@ -81,13 +81,13 @@ class ZipCodeDAO
 
     public function getFromDB($zip_code)
     {
-        $data = DB::table('zipinputs')->where('zip_code', $zip_code)->first();
+        $zipdata = DB::table('zipinputs')->where('zip_code', $zip_code)->first();
 
-        $timezone = DB::table('timezones')->where('timezone_identifier', $data->timezone_identifier)->first();
+        $timezone = DB::table('timezones')->where('timezone_identifier', $zipdata->timezone_identifier)->first();
         $citynames = DB::table('citynames')->where('zip_code', $zip_code)->get();
         $areacodes = DB::table('areacodes')->where('zip_code', $zip_code)->get();
 
-        // Make acceptable city names object
+        // Make acceptable_city_names object
         $cityArray = array();
         foreach ($citynames as $city) {
             $citynameobj = new AcceptableCity();
@@ -103,12 +103,12 @@ class ZipCodeDAO
             array_push($areacodeArray, $areacode->area_code);
         }
 
-        // Combining data to one model
-        $data->timezone = $timezone;
-        $data->acceptable_city_names = $cityArray;
-        $data->area_codes = $areacodeArray;
+        // Combining data to one object
+        $zipdata->timezone = $timezone;
+        $zipdata->acceptable_city_names = $cityArray;
+        $zipdata->area_codes = $areacodeArray;
 
-        return $data;
+        return $zipdata;
     }
 }
 

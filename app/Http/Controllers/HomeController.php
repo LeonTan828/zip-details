@@ -8,10 +8,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $results = "";
-
-        return view('home', [
-            'results' => $results
-        ]);
+        return view('home');
     }
 }
