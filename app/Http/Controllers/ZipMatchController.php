@@ -29,6 +29,9 @@ class ZipMatchController extends Controller
         if ($matchresult['error']) {
             $errorMessage = $matchresult['error'];
         }
+        else if (sizeof($matchresult['match']) == 0) {
+            $errorMessage = 'No Match';
+        }
         else {
             foreach ($matchresult['match'] as $match) {
                 $zipCodePair = array($zipmatch->get($match->zip_code1)['model'],

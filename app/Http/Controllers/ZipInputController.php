@@ -12,7 +12,7 @@ class ZipInputController extends Controller
         $condition = "first";
 
         return view('zipdetail', [
-            'results' => null,
+            'results' => array(),
             'condition' => $condition
         ]); 
     }
@@ -22,8 +22,13 @@ class ZipInputController extends Controller
         $zipaccess = new ZipCodeAccessor();
         $zipaccessresult = $zipaccess->get($request->zip_code);
 
+        $models = array();
+        if ($zipaccessresult['model']) {
+            array_push($models, $zipaccessresult['model']);
+        }
+
         return view('zipdetail', [
-            'results' => $zipaccessresult['model'],
+            'results' => $models,
             'condition' => $zipaccessresult['error']
         ]);
 

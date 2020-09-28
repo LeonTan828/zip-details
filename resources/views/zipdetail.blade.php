@@ -17,6 +17,9 @@
     </form>
 
     <br>
-    @include('components.table', ['zipCodes'=>array($results), 'condition'=>$condition])
+    @include('components.errormessage', ['condition'=>$condition])
+    @foreach ($results as $result)
+        @include('components.table', ['zipCodes'=>array($result)])
+    @endforeach
 
 @endsection
