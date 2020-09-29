@@ -51,6 +51,7 @@ Running test is easy in Laravel Valet. Here are the steps to do so
 2. Run `php artisan test`
 
 The output should look like this
+
 ![alt text](https://github.com/LeonTan828/zip-details/blob/master/screenshots/runtest.png)
 
 ## Using the Web app
