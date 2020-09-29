@@ -40,7 +40,9 @@ such as Apache or Nginx are binding to your local machine's port 80
     - ZIPCODEAPIKEY = Get latest key from http://www.zipcodeapi.com/API#zipToLoc
 
 10. run `php artisan migrate`. This sets up the tables for the database that we created. The output should look like this
+
     ![alt text](https://github.com/LeonTan828/zip-details/blob/master/screenshots/migrate.png)
+
 11. Open a browser, and type in `zip-details.test`. This web app should run in browser now
 
 ## Running Test
@@ -64,7 +66,7 @@ In this case, it would be `zip-details.test`
 ## Using the application
 
 This is how the front page will look like
-![alt text](https://github.com/LeonTan828/zip-details/blob/master/screenshots/runtest.png)
+![alt text](https://github.com/LeonTan828/zip-details/blob/master/screenshots/frontpage.png)
 
 There are 2 functionality that this web app provides. You may access them by clicking on
 any of the buttons
@@ -73,12 +75,18 @@ any of the buttons
 
 Clicking on _Get ZIP Code Details_ will bring you to a page that display the location
 details of the ZIP Code that you submit
+
+Here's it should look when a valid ZIP Code is entered
+
 ![alt text](https://github.com/LeonTan828/zip-details/blob/master/screenshots/zipdetails.png)
 
 ### Check ZIP Codes Match
 
 Clicking on _Check ZIP Code Match_ will check if the 2 ZIP Codes that you enter are within the distance that you provided. If they are, it will proceed to display the location details
 of the 2 ZIP Codes
+
+Here's how it should look when 2 valid ZIP Codes are given and they are within range of the distance given also
+
 ![alt text](https://github.com/LeonTan828/zip-details/blob/master/screenshots/zipmatch.png)
 
 ## How it works
