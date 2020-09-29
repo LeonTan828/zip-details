@@ -14,7 +14,7 @@
     </p>
     <div class="links">
         <a href="http://eatstreet-takehome.test/locationdetails">Get Zip Code Details</a>
-        <a href="http://eatstreet-takehome.test/matchclose">Check Zip Code Match</a>
+        <a href="http://eatstreet-takehome.test/matchclose">Check Zip Codes Match</a>
     </div>
 
 @endsection
