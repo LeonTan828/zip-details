@@ -10,8 +10,7 @@ class ZipMatchController extends Controller
     public function index()
     {
         return view('match', [
-            'zipCodePairs' => array(),
-            'error' => null
+            'zipCodePairs' => array()
         ]);
     }
 
@@ -24,27 +23,16 @@ class ZipMatchController extends Controller
                                         $request->distunit);
 
         $zipCodePairs = array();
-        $errorMessage = null;
 
-        if ($matchresult['error']) {
-            $errorMessage = $matchresult['error'];
-        }
-        else if (sizeof($matchresult['matches']) == 0) {
-            $errorMessage = 'No Match';
-            // TODO dun throw exception here, but show message if array is empty
-        }
-        else {
-            foreach ($matchresult['matches'] as $match) {
-                $zipCodePair = array($zipmatch->getLocationDetails($match->zip_code1)['details'],
-                                    $zipmatch->getLocationDetails($match->zip_code2)['details']);
-                
-                array_push($zipCodePairs, $zipCodePair);
-            }
+        foreach ($matchresult as $match) {
+            $zipCodePair = array($zipmatch->getLocationDetails($match->zip_code1),
+                                $zipmatch->getLocationDetails($match->zip_code2));
+            
+            array_push($zipCodePairs, $zipCodePair);
         }
         
         return view('match', [
-            'zipCodePairs' => $zipCodePairs,
-            'error' => $errorMessage
+            'zipCodePairs' => $zipCodePairs
         ]);
     }
 }

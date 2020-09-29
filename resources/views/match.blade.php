@@ -30,7 +30,9 @@
     @if (Session('error'))
         <p class="alert alert-danger">{{ session('error') }}</p>
     @endif
-    @include('components.errormessage', ['error'=>$error])
+    @if (sizeof($zipCodePairs) == 0)
+        <p> No Match <p>
+    @endif
     @foreach ($zipCodePairs as $pair)
         @include('components.table', ['zipCodes' => $pair])
         <br>

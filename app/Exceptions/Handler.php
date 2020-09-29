@@ -56,6 +56,12 @@ class Handler extends ExceptionHandler
         if ($exception instanceof ZipCodeClientException) {
             return back()->withError($exception->getMessage());
         }
+        if ($exception instanceof ZipCodeNotFoundException) {
+            return back()->withError($exception->getMessage());
+        }
+        if ($exception instanceof NoDistanceInputException) {
+            return back()->withError($exception->getMessage());
+        }
         return parent::render($request, $exception);
     }
 }

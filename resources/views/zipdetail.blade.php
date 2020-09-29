@@ -25,7 +25,6 @@
         <p class="alert alert-danger">{{ session('error') }}</p>
     @endif
     <br>
-    @include('components.errormessage', ['error'=>$error])
     @foreach ($zipCodes as $zip_code)
         @include('components.table', ['zipCodes'=>array($zip_code)])
     @endforeach

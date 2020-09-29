@@ -11,8 +11,7 @@ class ZipDetailsController extends Controller
     public function index()
     {
         return view('zipdetail', [
-            'zipCodes' => array(),
-            'error' => null
+            'zipCodes' => array()
         ]); 
 
         // return back()->withError('asdfa');
@@ -24,13 +23,12 @@ class ZipDetailsController extends Controller
         $zipresult = $zipaccess->getLocationDetails($request->zip_code);
 
         $zipCodes = array();
-        if ($zipresult['details']) {
-            array_push($zipCodes, $zipresult['details']);
+        if ($zipresult) {
+            array_push($zipCodes, $zipresult);
         }
 
         return view('zipdetail', [
-            'zipCodes' => $zipCodes,
-            'error' => $zipresult['error']
+            'zipCodes' => $zipCodes
         ]);
     }
 }

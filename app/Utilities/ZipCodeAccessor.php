@@ -8,6 +8,8 @@ use GuzzleHttp\Exception\RequestException;
 use App\Utilities\ZipCodeDAO;
 use App\Exceptions\InvalidZipCodeInputException;
 use App\Exceptions\ZipCodeClientException;
+use App\Exceptions\ZipCodeNotFoundException;
+use App\Exceptions\NoDistanceInputException;
 
 /**
  * ZipCodeAccessor is a class for getting details about location through a
@@ -44,7 +46,7 @@ class ZipCodeAccessor
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
                 if ($e->getResponse()->getStatusCode() == '404') {
-                    throw new ZipCodeClientException('This Zip code does not exist');
+                    throw new ZipCodeNotFoundException('This Zip code does not exist');
                 }
             }
             throw new ZipCodeClientException('Caught an unknown exception: '
@@ -54,10 +56,7 @@ class ZipCodeAccessor
         $statusCode = $response->getStatusCode();
         $body = $response->getBody()->getContents();
 
-        return array(
-            'details' => json_decode($body),
-            'error' => null
-        );
+        return json_decode($body);
     }
 
     public function findZipCloseMatchAPI($zips, $dist, $distunit)
@@ -65,7 +64,11 @@ class ZipCodeAccessor
         foreach ($zips as $zip) {
             $this->validateZipCodeFormat($zip);
         }
-        
+
+        if (!$dist) {
+            throw new NoDistanceInputException('Please provide a distance');
+        }
+
         $client = new Client();
         $format = 'json';
         $zipcodes = implode(',',$zips);
@@ -74,14 +77,6 @@ class ZipCodeAccessor
         try {
             $response = $client->request('GET', $api_url);
         } catch (RequestException $e) {
-            // if ($e->hasResponse()) {
-            //     if ($e->getResponse()->getStatusCode() >= '400') {
-            //         return array(
-            //             'matches' => null,
-            //             'error' => "Bad Request"
-            //         );
-            //     }
-            // }
             throw new ZipCodeClientException('Caught an exception: '
                 .$e->getMessage(), $e->getCode(), $e);
         }
@@ -90,10 +85,7 @@ class ZipCodeAccessor
         $body = $response->getBody()->getContents();
         $body = json_decode($body);
 
-        return array(
-            'matches' => $body,
-            'error' => null
-        );
+        return $body;
     }
 
     public function getLocationDetails($zip_code) {
@@ -106,9 +98,9 @@ class ZipCodeAccessor
         if (!$found) {
             $apiResult = $this->getZipDetailAPI($zip_code);
 
-            if ($apiResult['details']) {
-                $zipDAO->add($apiResult['details']);
-                $apiResult['details']->source = 'API';
+            if ($apiResult) {
+                $zipDAO->add($apiResult);
+                $apiResult->source = 'API';
             }
 
             return $apiResult;
@@ -118,10 +110,7 @@ class ZipCodeAccessor
             $details = $zipDAO->getFromDB($zip_code);
             $details->source = 'Database';
 
-            return array(
-                'details' => $details,
-                'error' => null
-            );
+            return $details;
         }
     }
 }
