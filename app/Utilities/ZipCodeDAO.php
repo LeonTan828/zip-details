@@ -90,7 +90,7 @@ class ZipCodeDAO
         // Make acceptable_city_names object
         $cityArray = array();
         foreach ($citynames as $city) {
-            $citynameobj = new AcceptableCity();
+            $citynameobj = new CityName();
             $citynameobj->city = $city->city;
             $citynameobj->state = $city->state;
 
@@ -110,9 +110,4 @@ class ZipCodeDAO
 
         return $zipdata;
     }
-}
-
-class AcceptableCity {
-    public $city;
-    public $state;
 }
