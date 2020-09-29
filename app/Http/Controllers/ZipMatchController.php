@@ -10,7 +10,8 @@ class ZipMatchController extends Controller
     public function index()
     {
         return view('match', [
-            'zipCodePairs' => array()
+            'zipCodePairs' => array(),
+            'landing' => true
         ]);
     }
 
@@ -32,7 +33,8 @@ class ZipMatchController extends Controller
         }
         
         return view('match', [
-            'zipCodePairs' => $zipCodePairs
+            'zipCodePairs' => $zipCodePairs,
+            'landing' => false
         ]);
     }
 }

@@ -67,7 +67,7 @@
                 color: #5ac18e;
             }
 
-            .error-display {
+            .alert {
                 color: #ee608b;
             }
 
