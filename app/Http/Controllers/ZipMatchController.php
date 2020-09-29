@@ -31,6 +31,7 @@ class ZipMatchController extends Controller
         }
         else if (sizeof($matchresult['matches']) == 0) {
             $errorMessage = 'No Match';
+            // TODO dun throw exception here, but show message if array is empty
         }
         else {
             foreach ($matchresult['matches'] as $match) {

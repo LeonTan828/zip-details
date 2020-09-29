@@ -27,12 +27,13 @@
         <button type="submit">Submit</button>
     </form>
 
+    @if (Session('error'))
+        <p class="alert alert-danger">{{ session('error') }}</p>
+    @endif
     @include('components.errormessage', ['error'=>$error])
     @foreach ($zipCodePairs as $pair)
         @include('components.table', ['zipCodes' => $pair])
         <br>
     @endforeach
     
-
-
 @endsection

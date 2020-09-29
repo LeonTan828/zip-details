@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Utilities\ZipCodeAccessor;
+use App\Exceptions\InvalidZipCodeInputException;
 
 class ZipDetailsController extends Controller
 {
@@ -13,6 +14,8 @@ class ZipDetailsController extends Controller
             'zipCodes' => array(),
             'error' => null
         ]); 
+
+        // return back()->withError('asdfa');
     }
     
     public function getDetails(Request $request)

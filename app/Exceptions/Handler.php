@@ -50,6 +50,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof InvalidZipCodeInputException) {
+            return back()->withError($exception->getMessage());
+        }
+        if ($exception instanceof ZipCodeClientException) {
+            return back()->withError($exception->getMessage());
+        }
         return parent::render($request, $exception);
     }
 }

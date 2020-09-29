@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use App\Utilities\ZipCodeDAO;
+use App\Exceptions\InvalidZipCodeInputException;
+use App\Exceptions\ZipCodeClientException;
 
 /**
  * ZipCodeAccessor is a class for getting details about location through a
@@ -22,17 +24,15 @@ class ZipCodeAccessor
     }
 
     private function validateZipCodeFormat($zip_code) {
-        return (is_numeric($zip_code) && strlen($zip_code) == 5);
+        if(!is_numeric($zip_code) || strlen($zip_code) != 5) {
+            throw new InvalidZipCodeInputException('Invalid zip code format. Zip code should consist of 5 numeric characters');
+        }
+
     }
 
     public function getZipDetailAPI($zip)
     {
-        if (!$this->validateZipCodeFormat($zip)) {
-            return array(
-                'details' => null,
-                'error' => 'Bad Request'
-            );
-        }
+        $this->validateZipCodeFormat($zip);
 
         $client = new Client();
         $format = 'json';
@@ -44,12 +44,11 @@ class ZipCodeAccessor
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
                 if ($e->getResponse()->getStatusCode() == '404') {
-                    return array(
-                        'details' => null,
-                        'error' => 'Zip not found'
-                    );
+                    throw new ZipCodeClientException('This Zip code does not exist');
                 }
             }
+            throw new ZipCodeClientException('Caught an unknown exception: '
+                .$e->getMessage(), $e->getCode(), $e);
         }
 
         $statusCode = $response->getStatusCode();
@@ -64,12 +63,7 @@ class ZipCodeAccessor
     public function findZipCloseMatchAPI($zips, $dist, $distunit)
     {
         foreach ($zips as $zip) {
-            if (!$this->validateZipCodeFormat($zip)) {
-                return array(
-                    'details' => null,
-                    'error' => 'Bad Request'
-                );
-            }
+            $this->validateZipCodeFormat($zip);
         }
         
         $client = new Client();
@@ -80,14 +74,16 @@ class ZipCodeAccessor
         try {
             $response = $client->request('GET', $api_url);
         } catch (RequestException $e) {
-            if ($e->hasResponse()) {
-                if ($e->getResponse()->getStatusCode() >= '400') {
-                    return array(
-                        'matches' => null,
-                        'error' => "Bad Request"
-                    );
-                }
-            }
+            // if ($e->hasResponse()) {
+            //     if ($e->getResponse()->getStatusCode() >= '400') {
+            //         return array(
+            //             'matches' => null,
+            //             'error' => "Bad Request"
+            //         );
+            //     }
+            // }
+            throw new ZipCodeClientException('Caught an exception: '
+                .$e->getMessage(), $e->getCode(), $e);
         }
 
         $statusCode = $response->getStatusCode();
