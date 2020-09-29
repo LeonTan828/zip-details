@@ -20,13 +20,13 @@ class ZipDetailsController extends Controller
         $zipaccess = new ZipCodeAccessor();
         $zipresult = $zipaccess->getLocationDetails($request->zip_code);
 
-        $details = array();
+        $zipCodes = array();
         if ($zipresult['details']) {
-            array_push($details, $zipresult['details']);
+            array_push($zipCodes, $zipresult['details']);
         }
 
         return view('zipdetail', [
-            'zipCodes' => $details,
+            'zipCodes' => $zipCodes,
             'error' => $zipresult['error']
         ]);
     }

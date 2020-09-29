@@ -14,7 +14,7 @@
     
     <p>Type in 2 zip codes below, one distance and click submit</p>
 
-    <form action="/match" method="post">
+    <form action="/matchclose" method="post">
         <input type="text" name="zip_code1" placeholder="Zip Code">
         <input type="text" name="zip_code2" placeholder="Zip Code">
         <input type="text" name="dist" placeholder="Distance">

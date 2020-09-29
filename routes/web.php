@@ -18,5 +18,5 @@ Route::get('/', 'HomeController@index');
 Route::get('/locationdetails', 'ZipDetailsController@index');
 Route::post('/locationdetails', 'ZipDetailsController@getDetails');
 
-Route::get('/match', 'ZipMatchController@index');
-Route::post('/match', 'ZipMatchController@checkMatch');
+Route::get('/matchclose', 'ZipMatchController@index');
+Route::post('/matchclose', 'ZipMatchController@checkMatch');
